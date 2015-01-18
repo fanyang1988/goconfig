@@ -1,0 +1,10 @@
+{
+    "info1" : 122,
+    "info2" : "aaa2",
+    "info3" : "aaa3",
+    "info_arr" : ["a1", "a2", "a3"],
+    "info_obj" : {
+        "o1" : "sss",
+        "o2" : ["o21", "o22"]
+        }
+}
