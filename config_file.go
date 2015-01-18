@@ -1,4 +1,4 @@
-package config
+package goconfig
 
 import (
 	sj "github.com/bitly/go-simplejson"
