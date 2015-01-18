@@ -12,8 +12,9 @@ const (
 	DEFAULT_Update_Check_Time = 10 * time.Second
 )
 
+// goconfig manage
 type Config struct {
-	configs   map[string]*ConfigFile
+	configs   map[string]*configFile
 	notifys   *list.List
 	is_closed bool
 	com_chan  chan int
@@ -21,9 +22,10 @@ type Config struct {
 	mutex sync.RWMutex
 }
 
+// create goconfig manage
 func NewConfig() *Config {
 	return &Config{
-		configs: make(map[string]*ConfigFile),
+		configs: make(map[string]*configFile),
 		notifys: list.New(),
 	}
 }
@@ -52,7 +54,7 @@ func (self *Config) RegNotifyChan(notify_chan chan string) {
 	return
 }
 
-type getDataImpFunc func(*ConfigFile) *sj.Json
+type getDataImpFunc func(*configFile) *sj.Json
 
 func (self *Config) getImp(name string, imp getDataImpFunc) *sj.Json {
 	self.mutex.RLock()
@@ -68,7 +70,7 @@ func (self *Config) getImp(name string, imp getDataImpFunc) *sj.Json {
 
 // get all data from config
 func (self *Config) Get(name string) *sj.Json {
-	return self.getImp(name, func(config_file *ConfigFile) *sj.Json {
+	return self.getImp(name, func(config_file *configFile) *sj.Json {
 		re := config_file.get()
 		return &re
 	})
@@ -77,7 +79,7 @@ func (self *Config) Get(name string) *sj.Json {
 // get data by idx and name
 // for xlsx config
 func (self *Config) GetByIdx(name, idx string) *sj.Json {
-	return self.getImp(name, func(config_file *ConfigFile) *sj.Json {
+	return self.getImp(name, func(config_file *configFile) *sj.Json {
 		re := config_file.getById(idx)
 		return &re
 	})

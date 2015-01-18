@@ -10,7 +10,7 @@ import (
 
 // ConfugFile
 // ConfugFile is a file to watch and read
-type ConfigFile struct {
+type configFile struct {
 	path  string
 	mutex sync.RWMutex
 	data  *sj.Json
@@ -20,8 +20,8 @@ type ConfigFile struct {
 }
 
 //  new ConfugFile
-func newConfigFile(path string, is_need_update bool) (*ConfigFile, error) {
-	config_file := &ConfigFile{
+func newConfigFile(path string, is_need_update bool) (*configFile, error) {
+	config_file := &configFile{
 		path:           path,
 		is_need_update: is_need_update,
 	}
@@ -29,24 +29,24 @@ func newConfigFile(path string, is_need_update bool) (*ConfigFile, error) {
 	return config_file, err
 }
 
-func (self *ConfigFile) init() error {
+func (self *configFile) init() error {
 	return self.updateConfig()
 }
 
-func (self *ConfigFile) get() sj.Json {
+func (self *configFile) get() sj.Json {
 	self.mutex.RLock()
 	defer self.mutex.RUnlock()
 	// sj.Json is value
 	return *self.data
 }
 
-func (self *ConfigFile) getById(idx string) sj.Json {
+func (self *configFile) getById(idx string) sj.Json {
 	self.mutex.RLock()
 	defer self.mutex.RUnlock()
 	return *self.data.Get(idx)
 }
 
-func (self *ConfigFile) update() (error, bool) {
+func (self *configFile) update() (error, bool) {
 	is_need, err := self.isNeedUpdate()
 	if is_need && err == nil {
 		err := self.updateConfig()
@@ -56,7 +56,7 @@ func (self *ConfigFile) update() (error, bool) {
 	return nil, false
 }
 
-func (self *ConfigFile) updateConfig() error {
+func (self *configFile) updateConfig() error {
 	bytes, err := ioutil.ReadFile(self.path)
 	if err != nil {
 		return err
@@ -75,7 +75,7 @@ func (self *ConfigFile) updateConfig() error {
 	return nil
 }
 
-func (self *ConfigFile) isNeedUpdate() (bool, error) {
+func (self *configFile) isNeedUpdate() (bool, error) {
 	if !self.is_need_update {
 		return false, nil
 	}
