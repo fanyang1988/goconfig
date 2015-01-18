@@ -8,7 +8,7 @@ Current version: 0.0.1
 ###Getting Started
 ####To install:
     go get github.com/fanyang1988/goconfig
-####Base  usage：
+####Base  usage:
 this  is read info
 
 ```go
@@ -27,7 +27,7 @@ To read config data, it need to register file whit a name
 use [Reg()](https://gowalker.org/github.com/fanyang1988/goconfig#Config_Reg) function  register "../test_config_obj.json" to config name
 And then we can get data by config name
 
-For config in  a array like this:
+For config in a array like this:
 ```json
 {
     "1" : {
@@ -50,7 +50,7 @@ func main() {
 
 	config := goconfig.NewConfig()
 	config.Reg("info", "../test_config_obj.json", true)
-	
+
 	config.RegNotifyChan(notify_chan)
 
 	for {
