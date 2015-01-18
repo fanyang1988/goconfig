@@ -1,8 +1,34 @@
 package goconfig
 
 import (
+	"bufio"
+	"os"
 	"testing"
+	"time"
 )
+
+func changeConfigFile(path string) {
+	file, err := os.Create(path)
+	if err != nil {
+		return
+	}
+	defer file.Close()
+
+	writer := bufio.NewWriter(file)
+
+	writer.WriteString(`{
+		"info1" : 333,
+		"info2" : "aaa2",
+		"info3" : "aaa3",
+		"info_arr" : ["a1", "a2", "a3"],
+		"info_obj" : {
+			"o1" : "sss",
+			"o2" : ["o21", "o22"]
+			}
+	}`)
+	writer.Flush()
+
+}
 
 func TestConfigImp(t *testing.T) {
 	config_mng := NewConfig()
@@ -65,6 +91,11 @@ func TestConfigUpdate(t *testing.T) {
 	data := config_mng.Get("info")
 
 	t.Log("config : ", data)
+
+	go func() {
+		time.Sleep(2 * time.Second)
+		changeConfigFile("test_config_obj.json")
+	}()
 
 	for {
 		select {
