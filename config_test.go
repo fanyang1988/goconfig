@@ -26,6 +26,8 @@ func TestConfigImp(t *testing.T) {
 		t.Error("info error!")
 	}
 
+	config_mng.Close()
+
 	return
 }
 
@@ -48,6 +50,8 @@ func TestConfigGetByIdx(t *testing.T) {
 		t.Error("data1 error!")
 	}
 
+	config_mng.Close()
+
 	return
 }
 
@@ -55,7 +59,6 @@ func TestConfigUpdate(t *testing.T) {
 	update_chan := make(chan string)
 
 	config_mng := NewConfig()
-	config_mng.Start()
 	config_mng.Reg("info", "test_config_obj.json", true)
 	config_mng.RegNotifyChan(update_chan)
 

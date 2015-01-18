@@ -24,10 +24,12 @@ type Config struct {
 
 // create goconfig manage
 func NewConfig() *Config {
-	return &Config{
+	new_config := &Config{
 		configs: make(map[string]*configFile),
 		notifys: list.New(),
 	}
+	new_config.start()
+	return new_config
 }
 
 // register an config file
@@ -120,7 +122,7 @@ func (self *Config) reload() {
 }
 
 // start coroutine for update
-func (self *Config) Start() {
+func (self *Config) start() {
 	self.com_chan = make(chan int)
 	go func() {
 		for {

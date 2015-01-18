@@ -18,7 +18,6 @@ import "github.com/lunny/tango"
 
 func main() {
 	config := goconfig.NewConfig()
-	config.Start()
 	config.Reg("info", "../test_config_obj.json", true)
 	info_data := config.Get("info")
 }
@@ -50,9 +49,8 @@ func main() {
 	notify_chan := make(chan string)
 
 	config := goconfig.NewConfig()
-	config.Start()
-
 	config.Reg("info", "../test_config_obj.json", true)
+	
 	config.RegNotifyChan(notify_chan)
 
 	for {
