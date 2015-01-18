@@ -33,7 +33,7 @@ func NewConfig() *Config {
 //   path: config file path
 //   need_update: is need to upadte when file changed
 func (self *Config) Reg(name, path string, need_update bool) error {
-	new_config_file, err := NewConfigFile(path, need_update)
+	new_config_file, err := newConfigFile(path, need_update)
 	if err != nil {
 		return err
 	}
@@ -69,7 +69,7 @@ func (self *Config) getImp(name string, imp getDataImpFunc) *sj.Json {
 // get all data from config
 func (self *Config) Get(name string) *sj.Json {
 	return self.getImp(name, func(config_file *ConfigFile) *sj.Json {
-		re := config_file.Get()
+		re := config_file.get()
 		return &re
 	})
 }
@@ -78,7 +78,7 @@ func (self *Config) Get(name string) *sj.Json {
 // for xlsx config
 func (self *Config) GetByIdx(name, idx string) *sj.Json {
 	return self.getImp(name, func(config_file *ConfigFile) *sj.Json {
-		re := config_file.GetById(idx)
+		re := config_file.getById(idx)
 		return &re
 	})
 }
@@ -110,7 +110,7 @@ func (self *Config) reload() {
 	self.mutex.RLock()
 	defer self.mutex.RUnlock()
 	for config_name, config_file := range self.configs {
-		update_err, is_update := config_file.Update()
+		update_err, is_update := config_file.update()
 		if (update_err == nil) && is_update {
 			self.notify(config_name)
 		}

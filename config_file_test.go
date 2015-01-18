@@ -5,12 +5,12 @@ import (
 )
 
 func TestConfigFile(t *testing.T) {
-	configfile, err := NewConfigFile("test_config_obj.json", true)
+	configfile, err := newConfigFile("test_config_obj.json", true)
 	if err != nil {
 		t.Error("new err :", err.Error())
 	}
 
-	data := configfile.Get()
+	data := configfile.get()
 
 	t.Log("config : ", data)
 	t.Log("config : ", data.Get("info1"))

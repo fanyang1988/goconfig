@@ -6,10 +6,11 @@ import (
 )
 
 func main() {
-	fmt.Printf("This is an Test\n")
 	notify_chan := make(chan string)
+
 	config := goconfig.NewConfig()
 	config.Start()
+
 	config.Reg("info", "../test_config_obj.json", true)
 	config.RegNotifyChan(notify_chan)
 

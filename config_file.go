@@ -20,7 +20,7 @@ type ConfigFile struct {
 }
 
 //  new ConfugFile
-func NewConfigFile(path string, is_need_update bool) (*ConfigFile, error) {
+func newConfigFile(path string, is_need_update bool) (*ConfigFile, error) {
 	config_file := &ConfigFile{
 		path:           path,
 		is_need_update: is_need_update,
@@ -33,24 +33,20 @@ func (self *ConfigFile) init() error {
 	return self.updateConfig()
 }
 
-func (self *ConfigFile) Get() sj.Json {
+func (self *ConfigFile) get() sj.Json {
 	self.mutex.RLock()
 	defer self.mutex.RUnlock()
 	// sj.Json is value
 	return *self.data
 }
 
-func (self *ConfigFile) GetById(idx string) sj.Json {
+func (self *ConfigFile) getById(idx string) sj.Json {
 	self.mutex.RLock()
 	defer self.mutex.RUnlock()
 	return *self.data.Get(idx)
 }
 
-func (self *ConfigFile) Path() string {
-	return self.path
-}
-
-func (self *ConfigFile) Update() (error, bool) {
+func (self *ConfigFile) update() (error, bool) {
 	is_need, err := self.isNeedUpdate()
 	if is_need && err == nil {
 		err := self.updateConfig()
