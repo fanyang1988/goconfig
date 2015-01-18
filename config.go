@@ -8,6 +8,7 @@ import (
 )
 
 const (
+	// default watcher check time inc
 	DEFAULT_Update_Check_Time = 10 * time.Second
 )
 
@@ -42,7 +43,8 @@ func (self *Config) Reg(name, path string, need_update bool) error {
 	return nil
 }
 
-// register a channel to get update notify
+// register a channel to get update notify for what config is changed,
+// if "./info.json" named "info"  changed, the notify_chan will recv "info"
 func (self *Config) RegNotifyChan(notify_chan chan string) {
 	self.mutex.Lock()
 	self.notifys.PushBack(notify_chan)

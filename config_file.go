@@ -8,6 +8,8 @@ import (
 	"time"
 )
 
+// ConfugFile
+// ConfugFile is a file to watch and read
 type ConfigFile struct {
 	path  string
 	mutex sync.RWMutex
@@ -17,6 +19,7 @@ type ConfigFile struct {
 	is_need_update bool
 }
 
+//  new ConfugFile
 func NewConfigFile(path string, is_need_update bool) (*ConfigFile, error) {
 	config_file := &ConfigFile{
 		path:           path,
