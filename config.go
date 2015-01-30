@@ -23,7 +23,7 @@ type Config struct {
 }
 
 // create goconfig manage
-func NewConfig() *Config {
+func New() *Config {
     new_config := &Config{
         configs: make(map[string]*configFile),
         notifys: list.New(),
